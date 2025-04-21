@@ -16,6 +16,7 @@ while True:
         print(f"You drew {number_of_draws} times")
         break
     if user_choice not in choices:
+        print("\nInvalid option, try again!")
         continue
     comp_choice=choices[random_no]
     if (comp_choice=="rock" and user_choice=="scissors") or (comp_choice=="scissors" and user_choice=="paper") or (comp_choice=="paper" and user_choice=="rock"):
