@@ -1,6 +1,5 @@
 ''' Password manager '''
-
-pwd=input("What is the master password: ")
+''' IN terminal , pip install cryptography'''
 
 def view():
     with open("passwords.txt","r") as f:
