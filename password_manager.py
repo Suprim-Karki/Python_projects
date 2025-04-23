@@ -13,8 +13,8 @@ def load_key():
         data=f.read()
     return data
 
-master_pwd = input("What is the master password: ")
-key=load_key() + master_pwd.encode()
+
+key=load_key() 
 fer = Fernet(key)
 
 def view():
