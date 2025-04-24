@@ -1,17 +1,38 @@
 ''' Timed Math Chalenge'''
 
 import random
+import time
 
-operators=['+','-','*']
-min_operand=3
-max_operand=12
+OPERATORS=['+','-','*']
+MIN_OPERAND=3
+MAX_OPERAND=12
+total_problems=10
 
 def generate_problem():
-    left=random.randint(min_operand,max_operand)
-    right=random.randint(min_operand,max_operand)
-    operator=random.choice(operators)
+    left=random.randint(MIN_OPERAND,MAX_OPERAND)
+    right=random.randint(MIN_OPERAND,MAX_OPERAND)
+    operator=random.choice(OPERATORS)
 
     expression = f"{left} {operator} {right}"
-    return expression
+    ans=eval(expression)
+    return expression, ans
 
-print(generate_problem())
+
+wrong=0
+input("Press enter to start: ")
+print("----------------------")
+
+start_time=time.time()
+
+for i in range(total_problems):
+    expression,ans=generate_problem()
+    while True:
+        guess = input(f"Problem {i+1}\n{expression}: ")
+        if guess==str(ans):
+            break
+        wrong+=1
+
+end_time=time.time()
+total_time=end_time-start_time
+print("-----------------------")
+print(f"Nice Work! You finished in {total_time:.2f} seconds")
