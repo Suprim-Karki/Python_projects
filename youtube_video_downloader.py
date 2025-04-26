@@ -1,6 +1,8 @@
 ''' '''
 
-from pytube import YouTube
+from pytubefix import YouTube
+import tkinter as tk
+from tkinter import filedialog
 
 def download_video(url, save_path):
     try:
@@ -12,6 +14,20 @@ def download_video(url, save_path):
     except Exception as e:
         print("Error:", e)
 
-url = "https://www.youtube.com/watch?v=TKt2ZodI7FI"
-save_path = "C:/Users/Hamro Computers/Pictures/TWC/Programming/Projects"
-download_video(url, save_path)
+def open_file_dialog():
+    folder = filedialog.askdirectory()
+    if folder:
+        print(f"Selected folder: {folder}")
+    return folder
+
+if __name__=="__main__":
+    root=tk.Tk()
+    root.withdraw()
+    video_url=input("Enter the url: ")
+    save_dir=open_file_dialog()
+    if not save_dir:
+        print("Please select a folder!")
+    else:
+        print("Started downloading...")
+        download_video(video_url,save_dir)
+        
