@@ -174,10 +174,30 @@ def configure_style():
     pass
 
 def create_frames(myApp):
-    """
-    Create and configure the main frames for the application UI.
-    """
-    pass
+    top_frame = tk.Frame(myApp, height=50, bg="light grey")
+    top_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
+    top_frame.grid_propagate(False)
+
+    pizza_item_details_frame = tk.Frame(myApp, bg="red", width=600, height=300)
+    pizza_item_details_frame.config(width=1200, height=300)
+    pizza_item_details_frame.grid(row=1, column=0, sticky="nsew")
+    pizza_item_details_frame.grid_propagate(False)
+
+    item_details_frame = tk.Frame(myApp, bg="black", width=400, height=300)
+    item_details_frame.place(x=900,y=50)
+    item_details_frame.config(width=500, height=290)
+    item_details_frame.grid_propagate(False)
+
+    order_details_frame = tk.Frame(myApp, bg="green", height=400)
+    order_details_frame.grid(row=2, column=0, columnspan=2, sticky="nsew")
+    order_details_frame.grid_propagate(False)
+
+    return {
+        "menu": top_frame,
+        "pizza": pizza_item_details_frame,
+        "details": item_details_frame,
+        "cart": order_details_frame
+    }
 
 
 def create_buttons(frame, myApp, allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
