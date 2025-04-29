@@ -168,10 +168,9 @@ def quitApp(myApp):
     pass
 
 def configure_style():
-    """
-    Configure the visual style of the application, including button styles and themes.
-    """
-    pass
+    style = ttk.Style()
+    style.configure("TButton", font=("Arial", 10))
+    style.configure("big.TButton", font=("Arial", 12, "bold"))
 
 def create_frames(myApp):
     top_frame = tk.Frame(myApp, height=50, bg="light grey")
