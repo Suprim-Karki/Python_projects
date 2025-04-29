@@ -194,6 +194,28 @@ def create_buttons(frame, myApp, allPizzaDict, pizza_item_details_frame, item_de
     ttk.Button(frame, text="Delete", command=lambda: print("Delete Clicked")).grid(row=0, column=3, padx=5, pady=5)
     ttk.Button(frame, text="Quit", command=lambda: confirm_quit(myApp)).grid(row=0, column=4, padx=5, pady=5)
 
+def delete_pizza(name, allPizzaDict, pizza_prices, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart):
+    if messagebox.askyesno("Confirm Delete", f"Delete '{name}' from menu?"):
+        allPizzaDict.pop(name, None)
+        pizza_prices.pop(name, None)
+
+        try:
+            os.remove(os.path.join("allPizza", f"{name}.png"))
+        except FileNotFoundError:
+            pass
+
+        with open("pizza_prices.csv", "w", newline="") as file:
+            writer = csv.writer(file)
+            for pname, price in pizza_prices.items():
+                writer.writerow([pname, price])
+
+        clear_frame(item_details_frame)
+        clear_cart(order_details_frame, pizza_cart)
+        pizza_images_as_buttons(None, None, allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices)
+
+def confirm_quit(myApp):
+    if messagebox.askyesno("Confirm Quit", "Are you sure you want to quit?"):
+        myApp.quit()
 
 def main():
     if not os.path.exists("allPizza"):
