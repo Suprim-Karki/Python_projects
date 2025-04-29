@@ -19,6 +19,7 @@ import os
 import csv
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from PIL import Image, ImageTk
 
 
@@ -35,14 +36,13 @@ def load_pizza_prices(csv_file):
     return pizza_prices
 
 def save_images(path, image_dict):
-   
     VALID_IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff')
-
-    """
-    Load images from the specified path, resize them, and store them as PhotoImage objects in the provided dictionary.
-    The keys in the dictionary are the image file names without extensions.
-    """
-    pass
+    for filename in os.listdir(path):
+        if filename.lower().endswith(VALID_IMAGE_EXTENSIONS):
+            name = os.path.splitext(filename)[0]
+            img = Image.open(os.path.join(path, filename))
+            img = img.resize((80, 80))
+            image_dict[name] = ImageTk.PhotoImage(img)
     
 
 def pizza_images_as_buttons(btn1,btn2,images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
