@@ -124,12 +124,13 @@ def update_order_details_frame(order_details_frame, pizza_cart):
     ttk.Button(order_details_frame, text="Cancel",style="big.TButton", width=12, command=lambda: clear_cart(order_details_frame, pizza_cart)).grid(row=row + 1, column=1, pady=10, sticky="e")
     ttk.Button(order_details_frame, text="Confirm",style="big.TButton", width=12, command=lambda: confirm_order(order_details_frame, pizza_cart)).grid(row=row + 1, column=2, pady=10, sticky="e")
 
-def clear_all_frames(btn1, btn2,  pizza_item_details_frame, item_details_frame, order_details_frame,pizza_cart):
-    """
-    Clear all widgets from the specified frames and reset their backgrounds.
-    """
-    pass
-    
+def clear_all_frames(btn1, btn2, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart):
+    clear_frame(pizza_item_details_frame)
+    clear_frame(item_details_frame)
+    clear_cart(order_details_frame, pizza_cart)
+    btn1.config(state=tk.NORMAL)
+    btn2.config(state=tk.DISABLED)
+ 
 def clear_frame(frame):
     for widget in frame.winfo_children():
         widget.destroy()
