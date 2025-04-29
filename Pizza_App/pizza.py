@@ -43,7 +43,9 @@ def save_images(path, image_dict):
             img = Image.open(os.path.join(path, filename))
             img = img.resize((80, 80))
             image_dict[name] = ImageTk.PhotoImage(img)
-    
+def clear_frame(frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
 
 def pizza_images_as_buttons(btn1,btn2,images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
     
@@ -186,27 +188,24 @@ def create_buttons(frame, myApp, allPizzaDict, pizza_item_details_frame, item_de
     pass
 
 def main():
-    """
-    Main function to initialize the application, set up the UI, and start the main event loop.
-    """
+    if not os.path.exists("allPizza"):
+        os.makedirs("allPizza")
+
     myApp = tk.Tk()
     myApp.title("Online Pizza Store by Student-w123456")
-    myApp.geometry("1200x1200")
-    myApp.configure(background="red")
-
+    myApp.geometry("1200x800")
     configure_style()
     frames = create_frames(myApp)
-   
+
     pathAllPizza = 'allPizza/'
     pizza_prices_csv = "pizza_prices.csv"
+    allPizzaDict, pizza_cart = {}, {}
+    pizza_prices = load_pizza_prices(pizza_prices_csv)
 
-    allPizzaDict, pizza_cart, pizza_prices = {}, {}, load_pizza_prices(pizza_prices_csv)
     save_images(pathAllPizza, allPizzaDict)
-    print(f"Number of pizza images: {len(allPizzaDict)}")
-
-    # Create and configure buttons
-    # create_buttons(frames["menu"], myApp, allPizzaDict, frames["pizza"], frames["details"], frames["cart"], pizza_cart, pizza_prices)
+    create_buttons(frames["menu"], myApp, allPizzaDict, frames["pizza"], frames["details"], frames["cart"], pizza_cart, pizza_prices)
 
     myApp.mainloop()
 
 main()
+
