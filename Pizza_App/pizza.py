@@ -80,10 +80,17 @@ def load_image_in_frame(name, image, item_details_frame, order_details_frame, pi
 
 #  "Add to Cart" button
     def add_to_cart():
-        """
-        Load the selected pizza image and details into the item_details_frame.
-        Allow the user to specify the quantity and add the item to the cart.
-        """
+        qty = int(qty_var.get())
+        if name in pizza_cart:
+            pizza_cart[name]["quantity"] += qty
+        else:
+            pizza_cart[name] = {"quantity": qty, "price": price, "image": image}
+        update_order_details_frame(order_details_frame, pizza_cart)
+        clear_frame(item_details_frame)
+
+        ttk.Button(item_details_frame, text="Cancel", command=lambda: clear_frame(item_details_frame)).grid(row=4, column=0, pady=5)
+        ttk.Button(item_details_frame, text="Add to Cart", command=add_to_cart).grid(row=4, column=1, pady=5)
+
 
         # Clear the display frame
         for widget in item_details_frame.winfo_children():
