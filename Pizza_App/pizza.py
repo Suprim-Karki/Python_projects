@@ -173,11 +173,24 @@ def add_pizza():
     """
     pass
 
-def del_pizza():
-    """
-    Print message in console
-    """
-    pass
+def delete_pizza(name, allPizzaDict, pizza_prices, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart):
+    if messagebox.askyesno("Confirm Delete", f"Delete '{name}' from menu?"):
+        allPizzaDict.pop(name, None)
+        pizza_prices.pop(name, None)
+
+        try:
+            os.remove(os.path.join("allPizza", f"{name}.png"))
+        except FileNotFoundError:
+            pass
+
+        with open("pizza_prices.csv", "w", newline="") as file:
+            writer = csv.writer(file)
+            for pname, price in pizza_prices.items():
+                writer.writerow([pname, price])
+
+        clear_frame(item_details_frame)
+        clear_cart(order_details_frame, pizza_cart)
+        pizza_images_as_buttons(None, None, allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices)
 
 def quitApp(myApp):
     """
