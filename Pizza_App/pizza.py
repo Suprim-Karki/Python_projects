@@ -193,13 +193,6 @@ def delete_pizza(name, allPizzaDict, pizza_prices, pizza_item_details_frame, ite
         pizza_images_as_buttons(None, None, allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices)
 
 def quitApp(myApp):
-    """
-    Prompt the user to confirm quitting the application.
-    If confirmed, close the application.
-    """
-    pass
-
-def confirm_quit(myApp):
     if messagebox.askyesno("Confirm Quit", "Are you sure you want to quit?"):
         myApp.quit()
 
@@ -247,7 +240,7 @@ def create_buttons(frame, myApp, allPizzaDict, pizza_item_details_frame, item_de
 
     ttk.Button(frame, text="Add New", command=lambda: print("Add New Clicked")).grid(row=0, column=2, padx=5, pady=5)
     ttk.Button(frame, text="Delete", command=lambda: print("Delete Clicked")).grid(row=0, column=3, padx=5, pady=5)
-    ttk.Button(frame, text="Quit", command=lambda: confirm_quit(myApp)).grid(row=0, column=4, padx=5, pady=5)
+    ttk.Button(frame, text="Quit", command=lambda: quitApp(myApp)).grid(row=0, column=4, padx=5, pady=5)
 
 def delete_pizza(name, allPizzaDict, pizza_prices, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart):
     if messagebox.askyesno("Confirm Delete", f"Delete '{name}' from menu?"):
