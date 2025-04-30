@@ -161,10 +161,9 @@ def clear_cart(order_details_frame, pizza_cart):
     tk.Label(order_details_frame, text="Your cart is empty").grid(row=0,column=0)
 
 def confirm_order(order_details_frame, pizza_cart):
-    """
-    Clear the cart and update the order_details_frame with a message  "Order successfully placed!"
-    """
-    pass
+    pizza_cart.clear()
+    clear_frame(order_details_frame)
+    tk.Label(order_details_frame, text="Order successfully placed!").grid(row=0,column=2)
 
 
 def add_pizza():
