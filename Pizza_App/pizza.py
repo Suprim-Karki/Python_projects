@@ -202,7 +202,7 @@ def configure_style():
     style.configure("big.TButton", font=("Arial", 12, "bold"))
 
 def create_frames(myApp):
-    top_frame = tk.Frame(myApp, height=50, bg="light grey")
+    top_frame = tk.Frame(myApp, height=50, bg="light grey",width=1200)
     top_frame.grid(row=0, column=0, columnspan=2, sticky="nsew")
     top_frame.grid_propagate(False)
 
@@ -216,7 +216,7 @@ def create_frames(myApp):
     item_details_frame.config(width=500, height=290)
     item_details_frame.grid_propagate(False)
 
-    order_details_frame = tk.Frame(myApp, bg="green", height=400)
+    order_details_frame = tk.Frame(myApp, bg="green", height=400, width=2000)
     order_details_frame.grid(row=2, column=0, columnspan=2, sticky="nsew")
     order_details_frame.grid_propagate(False)
 
