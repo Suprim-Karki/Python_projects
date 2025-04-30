@@ -66,15 +66,19 @@ def pizza_images_as_buttons(btn1, btn2, images, pizza_item_details_frame, item_d
     btn2.config(state=tk.NORMAL)
 
 def load_image_in_frame(name, image, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
-    for widget in item_details_frame.winfo_children():
-        widget.destroy()
-    """
-    Load the selected pizza image and details into the item_details_frame.
-    Allow the user to specify the quantity and add the item to the cart.
-    that will call add_to_cart function
-    """
-    pass
-    #  "Add to Cart" button
+    clear_frame(item_details_frame)
+
+    tk.Label(item_details_frame, image=image).grid(row=0, column=0, columnspan=2, pady=5)
+    tk.Label(item_details_frame, text=name).grid(row=1, column=0, columnspan=2)
+    price = pizza_prices.get(name, 0.0)
+    tk.Label(item_details_frame, text=f"Price: £{price:.2f}").grid(row=2, column=0, columnspan=2)
+
+    tk.Label(item_details_frame, text="Quantity").grid(row=3, column=0)
+    qty_var = tk.StringVar(value="1")
+    qty_menu = ttk.Combobox(item_details_frame, textvariable=qty_var, values=[str(i) for i in range(1, 6)], width=5)
+    qty_menu.grid(row=3, column=1)
+
+#  "Add to Cart" button
     def add_to_cart():
         """
         Load the selected pizza image and details into the item_details_frame.
