@@ -156,10 +156,9 @@ def clear_frame(frame):
         widget.destroy()
 
 def clear_cart(order_details_frame, pizza_cart):
-    """
-    Clear the cart and update the order_details_frame with a message  "Your cart is empty"
-    """
-    pass
+    pizza_cart.clear()
+    clear_frame(order_details_frame)
+    tk.Label(order_details_frame, text="Your cart is empty").grid(row=0,column=0)
 
 def confirm_order(order_details_frame, pizza_cart):
     """
