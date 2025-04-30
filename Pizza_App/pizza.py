@@ -47,14 +47,23 @@ def clear_frame(frame):
     for widget in frame.winfo_children():
         widget.destroy()
 
-def pizza_images_as_buttons(btn1,btn2,images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
-    
-    """
-    Render dictionary images as buttons in the pizza_item_details_frame.
-    Clicking a button loads the image and name into the item_details_frame.
-    """
-    pass
+def pizza_images_as_buttons(btn1, btn2, images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
+    clear_frame(pizza_item_details_frame)
+    row, col = 0, 0
+    for name, img in images.items():
+        frame = tk.Frame(pizza_item_details_frame)
+        frame.grid(row=row, column=col, padx=5, pady=5)
 
+        tk.Button(frame, image=img, command=lambda n=name, i=img: load_image_in_frame(n, i, item_details_frame, order_details_frame, pizza_cart, pizza_prices)).pack()
+        tk.Button(frame, text="Delete", command=lambda n=name: delete_pizza(n, images, pizza_prices, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart)).pack()
+
+        col += 1
+        if col > 5:
+            col = 0
+            row += 1
+
+    btn1.config(state=tk.DISABLED)
+    btn2.config(state=tk.NORMAL)
 
 def load_image_in_frame(name, image, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
     for widget in item_details_frame.winfo_children():
