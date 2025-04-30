@@ -199,6 +199,10 @@ def quitApp(myApp):
     """
     pass
 
+def confirm_quit(myApp):
+    if messagebox.askyesno("Confirm Quit", "Are you sure you want to quit?"):
+        myApp.quit()
+
 def configure_style():
     style = ttk.Style()
     style.configure("TButton", font=("Arial", 10))
