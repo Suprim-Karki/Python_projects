@@ -175,10 +175,8 @@ def clear_cart(order_details_frame, pizza_cart):
     clear_frame(order_details_frame)
 
 def confirm_order(order_details_frame, pizza_cart):
-    """
-    Clear the cart and update the order_details_frame with a message  "Order successfully placed!"
-    """
-    pass
+    clear_cart(order_details_frame,pizza_cart)
+    tk.Label(order_details_frame,text="Order placed sucessfully").grid()
 
 
 def add_pizza():
