@@ -18,6 +18,7 @@ Student ID: ______________________
 import os
 import csv
 import tkinter as tk
+from tkinter import messagebox
 from tkinter import ttk
 from PIL import Image, ImageTk
 
@@ -146,24 +147,17 @@ def confirm_order(order_details_frame, pizza_cart):
 
 
 def add_pizza():
-    
-    """
-    Print message in console
-    """
-    pass
+    print("Add pizza button activated")
 
 def del_pizza():
-    """
-    Print message in console
-    """
-    pass
+    print("Delete pizza button activated")
 
 def quitApp(myApp):
-    """
-    Prompt the user to confirm quitting the application.
-    If confirmed, close the application.
-    """
-    pass
+    result=messagebox.askyesno("Quit?","Do you want to quit?")
+    if result:
+        myApp.destroy()
+    else:
+        messagebox.showinfo("Continue","You chose to not quit")
 
 def configure_style():
     """
@@ -172,11 +166,28 @@ def configure_style():
     pass
 
 def create_frames(myApp):
-    """
-    Create and configure the main frames for the application UI.
-    """
-    pass
+    top_frame=tk.Frame(myApp,width=1200,height=50,bg='light gray')
+    top_frame.grid(row=0,column=0,columnspan=2,sticky='nsew')
+    top_frame.propagate(False)
 
+    pizza_item_details_frame=tk.Frame(myApp,width=2000,height=300,bg='red')
+    pizza_item_details_frame.grid(row=1,column=1,columnspan=2,sticky='nsew')
+    pizza_item_details_frame.propagate(False)
+    
+    item_details_frame=tk.Frame(myApp,width=500,height=290,bg='black')
+    item_details_frame.place(x=900,y=50)
+    item_details_frame.propagate(False)
+
+    order_details_frame=tk.Frame(myApp,width=2000,height=400,bg='green')
+    order_details_frame.grid(row=2,column=0,columnspan=2,sticky='nsew')
+    order_details_frame.propagate(False)
+
+    return{
+        "menu":top_frame,
+        "pizza":pizza_item_details_frame,
+        "details":item_details_frame,
+        "cart":order_details_frame
+    }
 
 def create_buttons(frame, myApp, allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
     """
