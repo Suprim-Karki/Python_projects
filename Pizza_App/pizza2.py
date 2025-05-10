@@ -49,6 +49,8 @@ def save_images(path, image_dict):
 
 def pizza_images_as_buttons(btn1,btn2,images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices,selected_pizza_name,delete_button):
     clear_frame(pizza_item_details_frame)
+    item_details_frame.config(bg="black")
+    order_details_frame.config(bg="green")
     row,col=0,0
     for name,image in images.items():
         frame=tk.Frame(pizza_item_details_frame)
@@ -97,7 +99,7 @@ def load_image_in_frame(name, image, item_details_frame, order_details_frame, pi
                 ''''''
                 pizza_cart[name]["quantity"]+=quantity
             else:
-                pizza_cart[name]={"quantity":quantity,"price":price}
+                pizza_cart[name]={"quantity":quantity,"price":price,"image":image}
         except ValueError:
             messagebox.showerror("Input Error","Value should be a whole number between 1 to 1000.")
             return
@@ -154,10 +156,16 @@ def update_order_details_frame(order_details_frame, pizza_cart):
     ttk.Button(order_details_frame, text="Confirm",style="big.TButton", width=12, command=lambda: confirm_order(order_details_frame, pizza_cart)).grid(row=row + 1, column=2, pady=10, sticky="e")
 
 def clear_all_frames(btn1, btn2,  pizza_item_details_frame, item_details_frame, order_details_frame,pizza_cart):
-    """
-    Clear all widgets from the specified frames and reset their backgrounds.
-    """
-    pass
+    clear_frame(pizza_item_details_frame)
+    clear_frame(item_details_frame)
+    clear_frame(order_details_frame)
+    clear_cart(order_details_frame,pizza_cart)
+    btn1.config(state=tk.NORMAL)
+    btn2.config(state=tk.DISABLED)
+
+    item_details_frame.config(bg='red')
+    order_details_frame.config(bg='red')
+   
     
 def clear_frame(frame):
     for widget in frame.winfo_children():
