@@ -38,12 +38,12 @@ def load_pizza_prices(csv_file):
 def save_images(path, image_dict):
    
     VALID_IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff')
+    ''''''
+    for pizza_file_name in os.listdir(path):
+        if pizza_file_name.lower().endswith(VALID_IMAGE_EXTENSIONS):
+            pizza_name=os.path.splitext(pizza_file_name)[0]
+            
 
-    """
-    Load images from the specified path, resize them, and store them as PhotoImage objects in the provided dictionary.
-    The keys in the dictionary are the image file names without extensions.
-    """
-    pass
     
 
 def pizza_images_as_buttons(btn1,btn2,images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
@@ -190,16 +190,24 @@ def create_frames(myApp):
     }
 
 def create_buttons(frame, myApp, allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
-    """
-    Create and configure buttons for the application UI.
-    Assign commands to each button to handle user interactions.
-    """
-    pass
+    ''' '''
+    selected_pizza_name=tk.StringVar(value="")
+    btn1=ttk.Button(frame,text="Show All Pizza")
+    btn2=ttk.Button(frame,text="Clear All Pizza",state=tk.DISABLED)
+    delete_button=ttk.Button(frame,text="Delete",state=tk.DISABLED)
 
+    btn1.grid(row=0,column=0,padx=5,pady=5)
+    btn2.grid(row=0,column=1,padx=5,pady=5)
+    delete_button.grid(row=0,column=2,padx=5,pady=5)
+    delete_button.config(command=lambda:del_pizza())
+
+    btn1.config(command=lambda: pizza_images_as_buttons(btn1,btn2,allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices))
+    btn2.config(command=lambda:clear_all_frames(btn1, btn2,  pizza_item_details_frame, item_details_frame, order_details_frame,pizza_cart))
+
+    add_pizza_btn=ttk.Button(frame,text="Add Pizza",command=lambda: add_pizza()).grid(row=0,column=3)
+    quit_btn=ttk.Button(frame,text="Quit",command=lambda: quitApp(myApp)).grid(row=0,column=4)
+    
 def main():
-    """
-    Main function to initialize the application, set up the UI, and start the main event loop.
-    """
     myApp = tk.Tk()
     myApp.title("Online Pizza Store by Student-w123456")
     myApp.geometry("1200x1200")
@@ -216,7 +224,7 @@ def main():
     print(f"Number of pizza images: {len(allPizzaDict)}")
 
     # Create and configure buttons
-    # create_buttons(frames["menu"], myApp, allPizzaDict, frames["pizza"], frames["details"], frames["cart"], pizza_cart, pizza_prices)
+    create_buttons(frames["menu"], myApp, allPizzaDict, frames["pizza"], frames["details"], frames["cart"], pizza_cart, pizza_prices)
 
     myApp.mainloop()
 
