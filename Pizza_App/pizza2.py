@@ -40,37 +40,58 @@ def save_images(path, image_dict):
     VALID_IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff')
     ''''''
     for pizza_file_name in os.listdir(path):
-        if pizza_file_name.lower().endswith(VALID_IMAGE_EXTENSIONS):
-            pizza_name=os.path.splitext(pizza_file_name)[0]
-            
+        for pizza_file_name in os.listdir(path):
+            if pizza_file_name.lower().endswith(VALID_IMAGE_EXTENSIONS):
+                pizza_name = os.path.splitext(pizza_file_name)[0]
+                path_joined_image = Image.open(os.path.join(path, pizza_file_name))
+                path_joined_image = path_joined_image.resize((80, 80))
+                image_dict[pizza_name] = ImageTk.PhotoImage(path_joined_image)
 
-    
+def pizza_images_as_buttons(btn1,btn2,images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices,selected_pizza_name,delete_button):
+    clear_frame(pizza_item_details_frame)
+    row,col=0,0
+    for name,image in images.items():
+        frame=tk.Frame(pizza_item_details_frame)
+        frame.grid(row=row,column=col,padx=5,pady=5)
 
-def pizza_images_as_buttons(btn1,btn2,images, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
-    
-    """
-    Render dictionary images as buttons in the pizza_item_details_frame.
-    Clicking a button loads the image and name into the item_details_frame.
-    """
-    pass
+        tk.Button(frame,image=image,command=lambda n=name,i=image:load_image_in_frame(n, i, item_details_frame, order_details_frame, pizza_cart, pizza_prices,selected_pizza_name,delete_button)).pack()
+
+        col+=1
+        if col>5:
+            col=0
+            row+=1
+
+    btn1.config(state=tk.DISABLED)
+    btn2.config(state=tk.NORMAL)
 
 
-def load_image_in_frame(name, image, item_details_frame, order_details_frame, pizza_cart, pizza_prices):
+def load_image_in_frame(name, image, item_details_frame, order_details_frame, pizza_cart, pizza_prices,selected_pizza_name,delete_button):
     for widget in item_details_frame.winfo_children():
         widget.destroy()
-    """
-    Load the selected pizza image and details into the item_details_frame.
-    Allow the user to specify the quantity and add the item to the cart.
-    that will call add_to_cart function
-    """
-    pass
+
+    ''''''
+    selected_pizza_name.set(name)
+    frame=tk.Frame(item_details_frame)
+    delete_button.config(state=tk.NORMAL)
+
+    tk.Label(item_details_frame,image=image).grid(row=0,column=0,columnspan=2,pady=5)
+    tk.Label(item_details_frame,text=name,font=('Arial',12)).grid(row=1,column=0,columnspan=2,pady=5)
+    price=pizza_prices.get(name,0.0)
+    tk.Label(item_details_frame,text=f"Price: {price:.2f}",font=('Arial',12)).grid(row=2,column=0,columnspan=2,pady=5)
+
+    # input box for qty
+    tk.Label(item_details_frame,text="Quantity").grid(row=3,column=0,pady=5)
+    ''''''
+    qty=tk.Spinbox(item_details_frame,from_=1,to=1000,width=5,font=('Arial',12))
+    qty.grid(row=3,column=1)
+
     #  "Add to Cart" button
     def add_to_cart():
-        """
-        Load the selected pizza image and details into the item_details_frame.
-        Allow the user to specify the quantity and add the item to the cart.
-        """
-
+        try:
+            quantity=int(qty)
+        except ValueError:
+            messagebox.showerror("Input Error","Value should be a whole number between 1 to 1000.")
+            return
         # Clear the display frame
         for widget in item_details_frame.winfo_children():
             widget.destroy()
@@ -168,19 +189,20 @@ def configure_style():
 def create_frames(myApp):
     top_frame=tk.Frame(myApp,width=1200,height=50,bg='light gray')
     top_frame.grid(row=0,column=0,columnspan=2,sticky='nsew')
-    top_frame.propagate(False)
+    top_frame.grid_propagate(False)
 
     pizza_item_details_frame=tk.Frame(myApp,width=2000,height=300,bg='red')
     pizza_item_details_frame.grid(row=1,column=1,columnspan=2,sticky='nsew')
-    pizza_item_details_frame.propagate(False)
+    pizza_item_details_frame.grid_propagate(False)
     
     item_details_frame=tk.Frame(myApp,width=500,height=290,bg='black')
     item_details_frame.place(x=900,y=50)
-    item_details_frame.propagate(False)
+    item_details_frame.config(width=500,height=290)
+    item_details_frame.grid_propagate(False)
 
     order_details_frame=tk.Frame(myApp,width=2000,height=400,bg='green')
     order_details_frame.grid(row=2,column=0,columnspan=2,sticky='nsew')
-    order_details_frame.propagate(False)
+    order_details_frame.grid_propagate(False)
 
     return{
         "menu":top_frame,
@@ -201,7 +223,7 @@ def create_buttons(frame, myApp, allPizzaDict, pizza_item_details_frame, item_de
     delete_button.grid(row=0,column=2,padx=5,pady=5)
     delete_button.config(command=lambda:del_pizza())
 
-    btn1.config(command=lambda: pizza_images_as_buttons(btn1,btn2,allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices))
+    btn1.config(command=lambda: pizza_images_as_buttons(btn1,btn2,allPizzaDict, pizza_item_details_frame, item_details_frame, order_details_frame, pizza_cart, pizza_prices,selected_pizza_name,delete_button))
     btn2.config(command=lambda:clear_all_frames(btn1, btn2,  pizza_item_details_frame, item_details_frame, order_details_frame,pizza_cart))
 
     add_pizza_btn=ttk.Button(frame,text="Add Pizza",command=lambda: add_pizza()).grid(row=0,column=3)
