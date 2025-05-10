@@ -158,7 +158,6 @@ def update_order_details_frame(order_details_frame, pizza_cart):
 def clear_all_frames(btn1, btn2,  pizza_item_details_frame, item_details_frame, order_details_frame,pizza_cart):
     clear_frame(pizza_item_details_frame)
     clear_frame(item_details_frame)
-    clear_frame(order_details_frame)
     clear_cart(order_details_frame,pizza_cart)
     btn1.config(state=tk.NORMAL)
     btn2.config(state=tk.DISABLED)
@@ -172,10 +171,8 @@ def clear_frame(frame):
         widget.destroy()
 
 def clear_cart(order_details_frame, pizza_cart):
-    """
-    Clear the cart and update the order_details_frame with a message  "Your cart is empty"
-    """
-    pass
+    pizza_cart.clear()
+    clear_frame(order_details_frame)
 
 def confirm_order(order_details_frame, pizza_cart):
     """
