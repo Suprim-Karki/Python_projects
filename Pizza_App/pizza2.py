@@ -88,7 +88,16 @@ def load_image_in_frame(name, image, item_details_frame, order_details_frame, pi
     #  "Add to Cart" button
     def add_to_cart():
         try:
-            quantity=int(qty)
+            ''''''
+            quantity=int(qty.get())
+            if (quantity<1 or quantity>1000):
+                messagebox.showerror("Input Error","Value should be a whole number between 1 to 1000.")
+                return
+            if name in pizza_cart:
+                ''''''
+                pizza_cart[name]["quantity"]+=quantity
+            else:
+                pizza_cart[name]={"quantity":quantity,"price":price}
         except ValueError:
             messagebox.showerror("Input Error","Value should be a whole number between 1 to 1000.")
             return
